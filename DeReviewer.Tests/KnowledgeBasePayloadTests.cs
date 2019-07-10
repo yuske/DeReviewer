@@ -16,82 +16,46 @@ namespace DeReviewer.Tests
             Environment.CurrentDirectory = directory ?? throw new InvalidOperationException("Assembly.Location is null");
         }
         
-        //[Ignore("for debugging only, change TestCase attribute for your case")]
-        [TestCase(typeof(KnowledgeBase.Cases.YamlDotNet), nameof(KnowledgeBase.Cases.YamlDotNet.MostGenericPattern))]
-        public void SingleCase(Type type, string methodName)
+        [Test]
+        [Ignore("for debugging only, change type and methodName vars for your case")]
+        public void SingleCase()
         {
-            Test(() =>
+            var type = typeof(KnowledgeBase.Cases.YamlDotNet);
+            var methodName = nameof(KnowledgeBase.Cases.YamlDotNet.MostGenericPattern); 
+            
+            var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
+            var errors = Test(type, method);
+            foreach (var error in errors)
             {
-                var obj = Loader.CreateObjectOf(type);
-                var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
-                var testCase = Loader.CreateMethodCall(obj, method);
-                testCase();
-            });
+                Console.WriteLine(error);
+            }
+
+            Assert.That(errors, Is.Empty);
         }
 
         [Test]
         public void AllCases()
         {
             var errors = new List<string>();
-            var typeCaseSample = typeof(DeReviewer.KnowledgeBase.Cases.YamlDotNet);
-            foreach (var type in typeCaseSample.Assembly.GetTypes())
+            foreach (var type in Loader.GetCaseTypes())
             {
-                // ReSharper disable once AssignNullToNotNullAttribute
-                // ReSharper disable once PossibleNullReferenceException
-                if (!type.Namespace.StartsWith(typeCaseSample.Namespace)) continue;
-
-                object instance;
-                try
+                Console.WriteLine($"{type}:");
+                foreach (var method in Loader.GetCaseMethods(type))
                 {
-                    instance = Loader.CreateObjectOf(type);
-                }
-                catch (Exception e)
-                {
-                    errors.Add($"{Title(type)} Error default constructor calling. {e.Message}");
-                    continue;
-                }
-                
-                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
-                {
-                    //skip Object methods
-                    if (method.ToString() == "Boolean Equals(System.Object)" ||
-                        method.ToString() == "System.String ToString()" ||
-                        method.ToString() == "Int32 GetHashCode()" ||
-                        method.ToString() == "System.Type GetType()")
-                    {
-                        continue;
-                    }
-                    
-                    try
-                    {
-                        var testCase = Loader.CreateMethodCall(instance, method);
-                        Test(testCase, false);
-                    }
-                    catch (Exception e)
-                    {
-                        errors.Add($"{Title(type, method)} {e.Message}");
-                    }
+                    Console.WriteLine($"    {method}");
+                    errors.AddRange(Test(type, method));
                 }
             }
             
             Assert.That(errors, Is.Empty);
         }
 
-        private void Test(Action testCase, bool showException = true)
+        private List<string> Test(Type type, MethodInfo method)
         {
             var id = Guid.NewGuid().ToString();
-            Dsl.PayloadCommand = $"echo some-text > {id}";
-            try
-            {
-                testCase();
-            }
-            catch (Exception e)
-            {
-                if (showException)
-                {
-                    Console.WriteLine(e);
-                }
-            }
+            var context = Context.CreateToTest($"echo some-text > {id}");
+            
+            var errors = Loader.ExecuteCase(context, type, new[] {method});
 
             var attempt = 0;
             while (attempt++ < 5)
@@ -100,11 +64,12 @@ namespace DeReviewer.Tests
                 if (File.Exists(id))
                 {
                     DeleteFileSafe(id);
-                    return;
+                    return errors;
                 }
             }
             
-            throw new Exception($"The payload has not been executed ({id})");
+            errors.Add($"The payload has not been executed ({id})");
+            return errors;
         }
 
         private void DeleteFileSafe(string fileName)

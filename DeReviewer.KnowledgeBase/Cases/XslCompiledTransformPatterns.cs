@@ -3,9 +3,11 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
+// ReSharper disable RedundantCast
+
 namespace DeReviewer.KnowledgeBase.Cases
 {
-    public class XslCompiledTransformPatterns
+    public class XslCompiledTransformPatterns : Case
     {
         public void XsltLoad()
         {

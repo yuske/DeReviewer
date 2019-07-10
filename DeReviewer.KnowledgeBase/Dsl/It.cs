@@ -3,9 +3,16 @@ using System.IO;
 
 namespace DeReviewer.KnowledgeBase
 {
-    internal static class It
+    internal class It
     {
-        public static T IsPayload<T>(string fileName)
+        private readonly Context context;
+
+        public It(Context context)
+        {
+            this.context = context;
+        }
+    
+        public T IsPayload<T>(string fileName)
         {
             var payloadType = typeof(T);
             if (payloadType == typeof(string))
@@ -22,15 +29,15 @@ namespace DeReviewer.KnowledgeBase
                 $"Must add an implementation of payload converting to '{payloadType}' in {typeof(It)}::{nameof(IsPayload)}<T>()");
         }
 
-        private static T Cast<T>(object obj) => (T) obj;
+        private T Cast<T>(object obj) => (T) obj;
         
-        private static string PayloadAsString(string fileName)
+        private string PayloadAsString(string fileName)
         {
             var payload = File.ReadAllText($@"Payloads\{fileName}");
-            return payload.Replace("%CMD%", Dsl.PayloadCommand);
+            return payload.Replace("%CMD%", context.PayloadCommand);
         }
 
-        private static TextReader PayloadAsTextReader(string fileName) 
+        private TextReader PayloadAsTextReader(string fileName) 
             => new StringReader(PayloadAsString(fileName));
     }
 }

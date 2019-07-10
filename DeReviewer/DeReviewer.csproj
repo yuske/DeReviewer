@@ -54,9 +54,9 @@
     <Compile Include="CallInfo.cs" />
     <Compile Include="CommandLine\AnalyzeOptions.cs" />
     <Compile Include="CommandLine\PayloadOptions.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="GraphViz.cs" />
     <Compile Include="IndexDB.cs" />
-    <Compile Include="Loader.cs" />
     <Compile Include="MethodDefExtensions.cs" />
     <Compile Include="PatternGroup.cs" />
     <Compile Include="Program.cs" />

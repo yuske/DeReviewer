@@ -5,13 +5,12 @@ namespace DeReviewer.KnowledgeBase.Internals
 {
     internal class PatternBuilder<T>
     {
-        private readonly Mode mode;
-
+        private readonly Context context;
         private Version requiredOlderVersion = new Version();
 
-        public PatternBuilder(Mode mode)
+        public PatternBuilder(Context context)
         {
-            this.mode = mode;
+            this.context = context;
         }
 
         public PatternBuilder<T> AssemblyVersionOlderThan(int major, int minor, int build = 0, int revision = 0)
@@ -43,13 +42,13 @@ namespace DeReviewer.KnowledgeBase.Internals
 
         private void AnalyzeOrTest(LambdaExpression expression, Action test)
         {
-            switch (mode)
+            switch (context.Mode)
             {
-                case Mode.Analyze:
+                case Context.ExecutionMode.Analyze:
                 {
                     if (expression.Body is MethodCallExpression methodCall)
                     {
-                        Dsl.Patterns.Add(new PatternInfo(
+                        context.Patterns.Add(new PatternInfo(
                             new MethodUniqueName(methodCall.Method),
                             requiredOlderVersion));
                         
@@ -59,14 +58,14 @@ namespace DeReviewer.KnowledgeBase.Internals
                     throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
                 }
 
-                case Mode.Test:
+                case Context.ExecutionMode.Test:
                 {
                     test();
                     break;
                 }
                 
                 default:
-                    throw new NotSupportedException($"Unknown mode {mode.ToString()}");
+                    throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
             }
         }
     }

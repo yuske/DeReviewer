@@ -3,9 +3,14 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 
+// ReSharper disable RedundantCast
+
+// Suppress the warning of using obsolete type XslTransform
+#pragma warning disable 618
+
 namespace DeReviewer.KnowledgeBase.Cases
 {
-    public class XslTransformPatterns
+    public class XslTransformPatterns : Case
     {
         public void XsltLoad()
         {

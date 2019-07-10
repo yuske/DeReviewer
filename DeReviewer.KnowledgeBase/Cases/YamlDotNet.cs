@@ -3,14 +3,17 @@ using YamlDotNet.Serialization;
 
 namespace DeReviewer.KnowledgeBase.Cases
 {
-    public class YamlDotNet
+    public class YamlDotNet : Case
     {
         public void MostGenericPattern()
         {
             var deserializer = new Deserializer();
             Pattern.Of<Deserializer>()
                 .AssemblyVersionOlderThan(5, 0)
-                .Create(() => deserializer.Deserialize(It.IsPayload<IParser>("ObjectDataProvider.yaml"), typeof(object)));
+                .Create(() => 
+                    deserializer.Deserialize(
+                        It.IsPayload<IParser>("ObjectDataProvider.yaml"), 
+                        typeof(object)));
         }
     }
 }

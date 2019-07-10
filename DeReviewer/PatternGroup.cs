@@ -3,7 +3,7 @@ using DeReviewer.KnowledgeBase.Internals;
 
 namespace DeReviewer
 {
-    internal class PatternGroup
+    public class PatternGroup
     {
         public PatternGroup(string name, List<PatternInfo> patterns)
         {
