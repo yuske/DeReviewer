@@ -9,6 +9,18 @@ namespace DeReviewer.KnowledgeBase.Cases
 {
     public class XslCompiledTransformPatterns : Case
     {
+        public void XsltLoadWithPayload()
+        {
+            var xsl = new XslCompiledTransform();
+            
+            // load calls with enableScript == true
+            Pattern.Create(() => 
+                xsl.Load(It.IsPayload<XmlReader>("MsxslScript.xsl"), XsltSettings.TrustedXslt, null));
+            
+            var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
+            xsl.Transform(document, XmlWriter.Create(TextWriter.Null));
+        }
+        
         public void XsltLoad()
         {
             var xsl = new XslCompiledTransform();

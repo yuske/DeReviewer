@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using System.Reflection;
 using DeReviewer.KnowledgeBase;
 using NUnit.Framework;
 
@@ -17,11 +15,11 @@ namespace DeReviewer.Tests
         }
 
         [Test]
-        [Ignore("for debugging only, change type and methodName vars for your case")]
+        //[Ignore("for debugging only, change type and methodName vars for your case")]
         public void SingleCase()
         {
-            var type = typeof(KnowledgeBase.Cases.YamlDotNet);
-            var methodName = nameof(KnowledgeBase.Cases.YamlDotNet.MostGenericPattern); 
+            var type = typeof(KnowledgeBase.Cases.XslCompiledTransformPatterns);
+            var methodName = nameof(KnowledgeBase.Cases.XslCompiledTransformPatterns.XsltLoadWithPayload); 
 
             var patternGroup = Loader.GetPatternGroup(type, methodName);
 

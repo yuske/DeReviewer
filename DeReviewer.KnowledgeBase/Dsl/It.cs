@@ -25,6 +25,11 @@ namespace DeReviewer.KnowledgeBase
                 return Cast<T>(new YamlDotNet.Core.Parser(PayloadAsTextReader(fileName)));
             }
 
+            if (payloadType.IsAssignableFrom(typeof(System.Xml.XmlReader)))
+            {
+                return Cast<T>(System.Xml.XmlReader.Create(PayloadAsTextReader(fileName)));
+            }
+
             throw new NotImplementedException(
                 $"Must add an implementation of payload converting to '{payloadType}' in {typeof(It)}::{nameof(IsPayload)}<T>()");
         }

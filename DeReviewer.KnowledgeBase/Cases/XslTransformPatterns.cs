@@ -12,13 +12,23 @@ namespace DeReviewer.KnowledgeBase.Cases
 {
     public class XslTransformPatterns : Case
     {
+        public void XsltLoadWithPayload()
+        {
+            var xsl = new XslTransform();
+            Pattern.Create(() => xsl.Load(It.IsPayload<XmlReader>("MsxslScript.xsl")));
+            
+            var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
+            xsl.Transform(document, null, TextWriter.Null, null);
+        }
+        
         public void XsltLoad()
         {
             var xsl = new XslTransform();
-            Pattern.Create(() => xsl.Load((string)null));
+            
+            Pattern.Create(() => xsl.Load((string)null));            
             Pattern.Create(() => xsl.Load((string)null, null));
             
-            Pattern.Create(() => xsl.Load((XmlReader) null));
+            //Pattern.Create(() => xsl.Load((XmlReader) null));
             Pattern.Create(() => xsl.Load((XmlReader) null, null));
             Pattern.Create(() => xsl.Load((XmlReader) null, null, null));
             

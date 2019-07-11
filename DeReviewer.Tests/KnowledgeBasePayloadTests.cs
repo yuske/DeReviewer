@@ -17,11 +17,11 @@ namespace DeReviewer.Tests
         }
         
         [Test]
-        [Ignore("for debugging only, change type and methodName vars for your case")]
+        //[Ignore("for debugging only, change type and methodName vars for your case")]
         public void SingleCase()
         {
-            var type = typeof(KnowledgeBase.Cases.YamlDotNet);
-            var methodName = nameof(KnowledgeBase.Cases.YamlDotNet.MostGenericPattern); 
+            var type = typeof(KnowledgeBase.Cases.XslCompiledTransformPatterns);
+            var methodName = nameof(KnowledgeBase.Cases.XslCompiledTransformPatterns.XsltLoadWithPayload); 
             
             var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
             var errors = Test(type, method);
