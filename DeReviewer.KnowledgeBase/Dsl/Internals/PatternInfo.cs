@@ -12,5 +12,7 @@ namespace DeReviewer.KnowledgeBase.Internals
 
         public MethodUniqueName Method { get; }
         public Version RequiredOlderVersion { get; }
+
+        public override string ToString() => $"{Method}, v{RequiredOlderVersion}";
     }
 }

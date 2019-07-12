@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace DeReviewer.KnowledgeBase.Internals
 {
@@ -26,12 +27,11 @@ namespace DeReviewer.KnowledgeBase.Internals
             switch (context.Mode)
             {
                 case ExecutionMode.Analyze:
-                    Analyze(expression);
+                    Analyze(expression, bySignature: true);
                     return;
 
                 case ExecutionMode.Test:
-                    var action = expression.Compile();
-                    action(it);
+                    Test(expression);
                     return;
 
                 default:
@@ -44,12 +44,11 @@ namespace DeReviewer.KnowledgeBase.Internals
             switch (context.Mode)
             {
                 case ExecutionMode.Analyze:
-                    Analyze(expression);
+                    Analyze(expression, bySignature: true);
                     return default(TResult);
 
                 case ExecutionMode.Test:
-                    var func = expression.Compile();
-                    return func(it);
+                    return Test(expression);
 
                 default:
                     throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
@@ -58,26 +57,79 @@ namespace DeReviewer.KnowledgeBase.Internals
         
         public void CreateByName(Expression<Action<It>> expression)
         {
-            throw new NotImplementedException();
+            switch (context.Mode)
+            {
+                case ExecutionMode.Analyze:
+                    Analyze(expression, bySignature: false);
+                    return;
+
+                case ExecutionMode.Test:
+                    Test(expression);
+                    return;
+
+                default:
+                    throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
+            }
         }
 
         public TResult CreateByName<TResult>(Expression<Func<It, TResult>> expression)
         {
-            throw new NotImplementedException();
+            switch (context.Mode)
+            {
+                case ExecutionMode.Analyze:
+                    Analyze(expression, bySignature: false);
+                    return default(TResult);
+
+                case ExecutionMode.Test:
+                    return Test(expression);
+
+                default:
+                    throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
+            }
         }
 
-        private void Analyze(LambdaExpression expression)
+        private void Analyze(LambdaExpression expression, bool bySignature)
         {
-            if (expression.Body is MethodCallExpression methodCall)
+            if (!(expression.Body is MethodCallExpression methodCall))
             {
-                context.Patterns.Add(new PatternInfo(
-                    new MethodUniqueName(methodCall.Method),
-                    requiredOlderVersion));
-                        
+                throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
+            }
+            
+            if (bySignature)
+            {
+                context.Patterns.Add(
+                    new PatternInfo(
+                        new MethodUniqueName(methodCall.Method),
+                        requiredOlderVersion));
+                
                 return;
             }
 
-            throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
+            var method = methodCall.Method;
+            foreach (var declaringTypeMethod in method.DeclaringType.GetMethods(
+                BindingFlags.Instance | BindingFlags.Static | 
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy))
+            {
+                if (declaringTypeMethod.Name != method.Name || declaringTypeMethod.IsPrivate)
+                    continue;
+                
+                context.Patterns.Add(
+                    new PatternInfo(
+                        new MethodUniqueName(declaringTypeMethod),
+                        requiredOlderVersion));
+            }
+        }
+
+        private void Test(Expression<Action<It>> expression)
+        {
+            var action = expression.Compile();
+            action(it);
+        }
+
+        private TResult Test<TResult>(Expression<Func<It, TResult>> expression)
+        {
+            var func = expression.Compile();
+            return func(it);
         }
     }
 }

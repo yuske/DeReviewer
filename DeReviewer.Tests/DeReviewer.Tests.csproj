@@ -61,6 +61,10 @@
     <Compile Include="Model\Inheritance\IInterface.cs" />
     <Compile Include="Model\Inheritance\IInterface2.cs" />
     <Compile Include="Model\Inheritance\SpecificClass.cs" />
+    <Compile Include="Model\Overloading\BaseClass.cs" />
+    <Compile Include="Model\Overloading\DerivedClass.cs" />
+    <Compile Include="Model\Overloading\GenericClass.cs" />
+    <Compile Include="PatternCreateTests.cs" />
     <Compile Include="PayloadCastTests.cs" />
     <Compile Include="PayloadGenerationCompletedTests.cs" />
     <Compile Include="SelfModelBase.cs" />
