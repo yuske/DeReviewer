@@ -10,7 +10,7 @@ namespace DeReviewer.KnowledgeBase.Cases
         public void Deserialize()
         {
             var serializer = new BinaryFormatter();
-            Pattern.Create(it =>
+            Pattern.CreateBySignature(it =>
                 serializer.Deserialize(
                     it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>()));
         }

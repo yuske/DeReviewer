@@ -20,55 +20,64 @@ namespace DeReviewer.KnowledgeBase.Internals
             requiredOlderVersion = new Version(major, minor, build, revision);
             return this;
         }
-        
-        public void Create(Expression<Action<It>> expression)
-        {
-            AnalyzeOrTest(expression, () =>
-            {
-                var func = expression.Compile();
-                func(it);
-            });
-        }
 
-        public TResult Create<TResult>(Expression<Func<It, TResult>> expression)
-        {
-            var result = default(TResult);
-            AnalyzeOrTest(expression, () =>
-            {
-                var func = expression.Compile();
-                result = func(it);
-            });
-
-            return result;
-        }
-
-        private void AnalyzeOrTest(LambdaExpression expression, Action test)
+        public void CreateBySignature(Expression<Action<It>> expression)
         {
             switch (context.Mode)
             {
                 case ExecutionMode.Analyze:
-                {
-                    if (expression.Body is MethodCallExpression methodCall)
-                    {
-                        context.Patterns.Add(new PatternInfo(
-                            new MethodUniqueName(methodCall.Method),
-                            requiredOlderVersion));
-                        
-                        return;
-                    }
-
-                    throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
-                }
+                    Analyze(expression);
+                    return;
 
                 case ExecutionMode.Test:
-                {
-                    test();
-                    break;
-                }
-                
+                    var action = expression.Compile();
+                    action(it);
+                    return;
+
                 default:
                     throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
             }
+        }
+
+        public TResult CreateBySignature<TResult>(Expression<Func<It, TResult>> expression)
+        {
+            switch (context.Mode)
+            {
+                case ExecutionMode.Analyze:
+                    Analyze(expression);
+                    return default(TResult);
+
+                case ExecutionMode.Test:
+                    var func = expression.Compile();
+                    return func(it);
+
+                default:
+                    throw new NotSupportedException($"Unknown mode {context.Mode.ToString()}");
+            }
+        }
+        
+        public void CreateByName(Expression<Action<It>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TResult CreateByName<TResult>(Expression<Func<It, TResult>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Analyze(LambdaExpression expression)
+        {
+            if (expression.Body is MethodCallExpression methodCall)
+            {
+                context.Patterns.Add(new PatternInfo(
+                    new MethodUniqueName(methodCall.Method),
+                    requiredOlderVersion));
+                        
+                return;
+            }
+
+            throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
         }
     }
 }

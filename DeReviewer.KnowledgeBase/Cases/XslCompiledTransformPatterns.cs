@@ -14,7 +14,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var xsl = new XslCompiledTransform();
             
             // load calls with enableScript == true
-            Pattern.Create(it => 
+            Pattern.CreateBySignature(it => 
                 xsl.Load(it.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>(), XsltSettings.TrustedXslt, null));
             
             var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
@@ -35,23 +35,23 @@ namespace DeReviewer.KnowledgeBase.Cases
         {
             var xsl = new XslCompiledTransform();
 
-            Pattern.Create(it => xsl.Transform((string) null, (string) null));
-            Pattern.Create(it => xsl.Transform((string) null, (XmlWriter) null));
-            Pattern.Create(it => xsl.Transform((string) null, (XsltArgumentList) null, (Stream) null));
-            Pattern.Create(it => xsl.Transform((string) null, (XsltArgumentList) null, (TextWriter) null));
-            Pattern.Create(it => xsl.Transform((string) null, (XsltArgumentList) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((string) null, (string) null));
+            Pattern.CreateBySignature(it => xsl.Transform((string) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((string) null, (XsltArgumentList) null, (Stream) null));
+            Pattern.CreateBySignature(it => xsl.Transform((string) null, (XsltArgumentList) null, (TextWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((string) null, (XsltArgumentList) null, (XmlWriter) null));
             
-            Pattern.Create(it => xsl.Transform((XmlReader) null, (XmlWriter) null));
-            Pattern.Create(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (Stream) null));
-            Pattern.Create(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (TextWriter) null));
-            Pattern.Create(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (XmlWriter) null));
-            Pattern.Create(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (XmlWriter) null, null));
+            Pattern.CreateBySignature(it => xsl.Transform((XmlReader) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (Stream) null));
+            Pattern.CreateBySignature(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (TextWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((XmlReader) null, (XsltArgumentList) null, (XmlWriter) null, null));
             
-            Pattern.Create(it => xsl.Transform((IXPathNavigable) null, (XmlWriter) null));
-            Pattern.Create(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (Stream) null));
-            Pattern.Create(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (TextWriter) null));
-            Pattern.Create(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (XmlWriter) null));
-            Pattern.Create(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (XmlWriter) null, null));
+            Pattern.CreateBySignature(it => xsl.Transform((IXPathNavigable) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (Stream) null));
+            Pattern.CreateBySignature(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (TextWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (XmlWriter) null));
+            Pattern.CreateBySignature(it => xsl.Transform((IXPathNavigable) null, (XsltArgumentList) null, (XmlWriter) null, null));
         }
     }
 }
