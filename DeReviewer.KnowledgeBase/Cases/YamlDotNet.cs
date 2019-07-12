@@ -12,7 +12,7 @@ namespace DeReviewer.KnowledgeBase.Cases
                 .AssemblyVersionOlderThan(5, 0)
                 .Create(() => 
                     deserializer.Deserialize(
-                        It.IsPayload<IParser>("ObjectDataProvider.yaml"), 
+                        It.IsPayloadFrom("ObjectDataProvider.yaml").Cast<IParser>(), 
                         typeof(object)));
         }
     }

@@ -15,7 +15,7 @@ namespace DeReviewer.KnowledgeBase.Cases
         public void XsltLoadWithPayload()
         {
             var xsl = new XslTransform();
-            Pattern.Create(() => xsl.Load(It.IsPayload<XmlReader>("MsxslScript.xsl")));
+            Pattern.Create(() => xsl.Load(It.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>()));
             
             var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
             xsl.Transform(document, null, TextWriter.Null, null);

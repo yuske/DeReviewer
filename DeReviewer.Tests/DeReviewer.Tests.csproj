@@ -59,6 +59,7 @@
     <Compile Include="Model\Inheritance\IInterface.cs" />
     <Compile Include="Model\Inheritance\IInterface2.cs" />
     <Compile Include="Model\Inheritance\SpecificClass.cs" />
+    <Compile Include="PayloadCastTests.cs" />
     <Compile Include="SelfModelBase.cs" />
     <Compile Include="InheritanceModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

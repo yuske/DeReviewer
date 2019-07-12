@@ -15,7 +15,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             
             // load calls with enableScript == true
             Pattern.Create(() => 
-                xsl.Load(It.IsPayload<XmlReader>("MsxslScript.xsl"), XsltSettings.TrustedXslt, null));
+                xsl.Load(It.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>(), XsltSettings.TrustedXslt, null));
             
             var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
             xsl.Transform(document, XmlWriter.Create(TextWriter.Null));

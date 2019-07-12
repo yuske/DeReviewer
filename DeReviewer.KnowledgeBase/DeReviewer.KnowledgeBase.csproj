@@ -46,13 +46,18 @@
     <Compile Include="Cases\XslTransformPatterns.cs" />
     <Compile Include="Cases\YamlDotNet.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Dsl\Payload.cs" />
+    <Compile Include="Dsl\IFormatter.cs" />
+    <Compile Include="Dsl\IGadget.cs" />
+    <Compile Include="Dsl\Internals\MethodUniqueName.cs" />
+    <Compile Include="Dsl\Internals\PatternBuilder.cs" />
+    <Compile Include="Dsl\Internals\PatternInfo.cs" />
+    <Compile Include="Dsl\Internals\PatternVisitor.cs" />
+    <Compile Include="Dsl\Internals\PayloadBuilder.cs" />
     <Compile Include="Dsl\It.cs" />
     <Compile Include="Dsl\Pattern.cs" />
     <Compile Include="Dsl\Case.cs" />
-    <Compile Include="Internals\PatternBuilder.cs" />
-    <Compile Include="Internals\MethodUniqueName.cs" />
-    <Compile Include="Internals\PatternInfo.cs" />
-    <Compile Include="Internals\PatternVisitor.cs" />
+    <Compile Include="Dsl\PayloadCast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Formatters" />
+    <Folder Include="Gadgets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
