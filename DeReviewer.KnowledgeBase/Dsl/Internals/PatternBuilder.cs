@@ -6,11 +6,13 @@ namespace DeReviewer.KnowledgeBase.Internals
     internal class PatternBuilder<T>
     {
         private readonly Context context;
+        private readonly It it;
         private Version requiredOlderVersion = new Version();
 
         public PatternBuilder(Context context)
         {
             this.context = context;
+            it = new It(context);
         }
 
         public PatternBuilder<T> AssemblyVersionOlderThan(int major, int minor, int build = 0, int revision = 0)
@@ -19,22 +21,22 @@ namespace DeReviewer.KnowledgeBase.Internals
             return this;
         }
         
-        public void Create(Expression<Action> expression)
+        public void Create(Expression<Action<It>> expression)
         {
             AnalyzeOrTest(expression, () =>
             {
                 var func = expression.Compile();
-                func();
+                func(it);
             });
         }
 
-        public TResult Create<TResult>(Expression<Func<TResult>> expression)
+        public TResult Create<TResult>(Expression<Func<It, TResult>> expression)
         {
             var result = default(TResult);
             AnalyzeOrTest(expression, () =>
             {
                 var func = expression.Compile();
-                result = func();
+                result = func(it);
             });
 
             return result;

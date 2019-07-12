@@ -16,10 +16,10 @@ namespace DeReviewer.KnowledgeBase
         public PatternBuilder<T> Of<T>() => 
             new PatternBuilder<T>(context);
         
-        public void Create(Expression<Action> expression) => 
+        public void Create(Expression<Action<It>> expression) => 
             new PatternBuilder<object>(context).Create(expression);
 
-        public TResult Create<TResult>(Expression<Func<TResult>> expression) => 
+        public TResult Create<TResult>(Expression<Func<It, TResult>> expression) => 
             new PatternBuilder<object>(context).Create(expression);
     }
 }

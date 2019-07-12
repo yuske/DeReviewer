@@ -11,8 +11,8 @@ namespace DeReviewer.KnowledgeBase
         {
             this.context = context;
         }
-
-        public PayloadBuilder<TGadget> IsPayload<TGadget>()
+        
+        public PayloadBuilder<TGadget> IsPayloadOf<TGadget>()
             where TGadget : IGadget, new()
         {
             return new PayloadBuilder<TGadget>(context);

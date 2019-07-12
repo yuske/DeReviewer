@@ -10,9 +10,9 @@ namespace DeReviewer.KnowledgeBase.Cases
             var deserializer = new Deserializer();
             Pattern.Of<Deserializer>()
                 .AssemblyVersionOlderThan(5, 0)
-                .Create(() => 
+                .Create(it => 
                     deserializer.Deserialize(
-                        It.IsPayloadFrom("ObjectDataProvider.yaml").Cast<IParser>(), 
+                        it.IsPayloadFrom("ObjectDataProvider.yaml").Cast<IParser>(), 
                         typeof(object)));
         }
     }
