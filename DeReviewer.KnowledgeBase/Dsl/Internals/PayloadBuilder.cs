@@ -13,10 +13,17 @@ namespace DeReviewer.KnowledgeBase.Internals
         public Payload Format<TFormatter>()
             where TFormatter : IFormatter, new()
         {
-            //TODO: add completed payload generation event
             var gadget = new TGadget();
             var formatter = new TFormatter();
-            return formatter.GeneratePayload(gadget.Build(context.PayloadCommand));
+            var payload = formatter.GeneratePayload(gadget.Build(context.PayloadCommand));
+            
+            bool interrupt = false;    // we can use it for generation payload from the commandline w/o testing    
+            context.RaisePayloadGenerationCompleted(
+                PayloadGenerationMode.GadgetBased,
+                payload, 
+                ref interrupt);
+
+            return payload;
         }
     }
 }

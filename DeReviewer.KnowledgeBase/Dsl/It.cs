@@ -21,7 +21,15 @@ namespace DeReviewer.KnowledgeBase
         public Payload IsPayloadFrom(string fileName)
         {
             var data = File.ReadAllText($@"Payloads\{fileName}");
-            return new Payload(data.Replace("%CMD%", context.PayloadCommand));
+            var payload = new Payload(data.Replace("%CMD%", context.PayloadCommand));
+
+            bool interrupt = false;    // we can use it for generation payload from the commandline w/o testing    
+            context.RaisePayloadGenerationCompleted(
+                PayloadGenerationMode.PayloadFileBased,
+                payload, 
+                ref interrupt);
+
+            return payload;
         }
     }
 }

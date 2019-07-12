@@ -47,7 +47,7 @@ namespace DeReviewer
             }
             catch (Exception e)
             {
-                errors.Add($"{Title(type)} Error default constructor calling. {e.Message}");
+                errors.Add($"{Title(type)} Error default constructor calling. {e}");
                 return errors;
             }
 
@@ -60,7 +60,7 @@ namespace DeReviewer
             }
             catch (Exception e)
             {
-                errors.Add($"{Title(type)} Error initialize. {e.Message}");
+                errors.Add($"{Title(type)} Error initialize. {e}");
                 return errors;
             }
 
@@ -74,7 +74,7 @@ namespace DeReviewer
                 }
                 catch (Exception e)
                 {
-                    errors.Add($"{Title(type, method)} {e.Message}");
+                    errors.Add($"{Title(type, method)} {e}");
                 }
             }
 

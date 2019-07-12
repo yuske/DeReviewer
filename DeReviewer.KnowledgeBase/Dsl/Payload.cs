@@ -1,9 +1,10 @@
+using System;
 using System.IO;
 using System.Text;
 
 namespace DeReviewer.KnowledgeBase
 {
-    internal class Payload
+    public class Payload
     {
         public Payload(Stream data)
         {
@@ -21,6 +22,11 @@ namespace DeReviewer.KnowledgeBase
         {
             var reader = new StreamReader(Data, Encoding.UTF8);
             return reader.ReadToEnd();
+        }
+
+        public string ToBase64String()
+        {
+            throw new NotImplementedException();
         }
     }
 }

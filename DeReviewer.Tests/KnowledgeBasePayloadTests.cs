@@ -50,29 +50,47 @@ namespace DeReviewer.Tests
             Assert.That(errors, Is.Empty);
         }
 
-        private List<string> Test(Type type, MethodInfo method)
+        private static List<string> Test(Type type, MethodInfo method)
         {
             var id = Guid.NewGuid().ToString();
-            var context = Context.CreateToTest($"echo some-text > {id}");
+            var context = Context.CreateToTest($"echo some-text > {id}",
+                (PayloadGenerationMode mode, Payload payload, ref bool interrupt) =>
+                {
+                    if (mode == PayloadGenerationMode.PayloadFileBased)
+                        return;
+
+                    // remove a file if it was created during payload generation 
+                    // TODO: add warning to log
+                    DeleteFileLoop(id);
+                });
             
             var errors = Loader.ExecuteCase(context, type, new[] {method});
 
+            if (!DeleteFileLoop(id))
+            {
+                errors.Add($"The payload has not been executed ({id})");    
+            }
+            
+            return errors;
+        }
+
+        internal static bool DeleteFileLoop(string fileName)
+        {
             var attempt = 0;
             while (attempt++ < 5)
             {
                 Thread.Sleep(100);
-                if (File.Exists(id))
+                if (File.Exists(fileName))
                 {
-                    DeleteFileSafe(id);
-                    return errors;
+                    DeleteFileSafe(fileName);
+                    return true;
                 }
             }
-            
-            errors.Add($"The payload has not been executed ({id})");
-            return errors;
+
+            return false;
         }
 
-        private void DeleteFileSafe(string fileName)
+        internal static void DeleteFileSafe(string fileName)
         {
             try
             {
@@ -83,8 +101,5 @@ namespace DeReviewer.Tests
                 Console.WriteLine(e);
             }
         }
-
-        private string Title(Type type, MethodInfo method = null) =>
-            method == null ? $"{type.Name}:" : $"{type.Name}.{method.Name}():";
     }
 }

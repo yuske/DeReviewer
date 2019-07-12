@@ -59,8 +59,10 @@
     <Compile Include="Dsl\Pattern.cs" />
     <Compile Include="Dsl\Case.cs" />
     <Compile Include="Dsl\PayloadCast.cs" />
+    <Compile Include="ExecutionMode.cs" />
     <Compile Include="Formatters\Binary.cs" />
     <Compile Include="Gadgets\TypeConfuseDelegate.cs" />
+    <Compile Include="PayloadGenerationMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

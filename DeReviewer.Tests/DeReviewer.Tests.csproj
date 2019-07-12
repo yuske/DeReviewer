@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="AccessScopeTests.cs" />
     <Compile Include="CallGraphTests.cs" />
+    <Compile Include="KnowledgeBaseFake\BinaryFormatterPatternsFake.cs" />
+    <Compile Include="KnowledgeBaseFake\TypeConfuseDelegateFake.cs" />
     <Compile Include="KnowledgeBasePatternTests.cs" />
     <Compile Include="Model\AccessScope\InternalClass.cs" />
     <Compile Include="Model\AccessScope\PublicClass.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Model\Inheritance\IInterface2.cs" />
     <Compile Include="Model\Inheritance\SpecificClass.cs" />
     <Compile Include="PayloadCastTests.cs" />
+    <Compile Include="PayloadGenerationCompletedTests.cs" />
     <Compile Include="SelfModelBase.cs" />
     <Compile Include="InheritanceModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

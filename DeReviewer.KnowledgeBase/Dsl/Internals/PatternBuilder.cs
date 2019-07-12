@@ -46,7 +46,7 @@ namespace DeReviewer.KnowledgeBase.Internals
         {
             switch (context.Mode)
             {
-                case Context.ExecutionMode.Analyze:
+                case ExecutionMode.Analyze:
                 {
                     if (expression.Body is MethodCallExpression methodCall)
                     {
@@ -60,7 +60,7 @@ namespace DeReviewer.KnowledgeBase.Internals
                     throw new NotSupportedException($"The pattern '{expression}' doesn't contain a method call");
                 }
 
-                case Context.ExecutionMode.Test:
+                case ExecutionMode.Test:
                 {
                     test();
                     break;
