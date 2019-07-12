@@ -20,8 +20,8 @@ namespace DeReviewer.Tests
         //[Ignore("for debugging only, change type and methodName vars for your case")]
         public void SingleCase()
         {
-            var type = typeof(KnowledgeBase.Cases.XslCompiledTransformPatterns);
-            var methodName = nameof(KnowledgeBase.Cases.XslCompiledTransformPatterns.XsltLoadWithPayload); 
+            var type = typeof(KnowledgeBase.Cases.BinaryFormatterPatterns);
+            var methodName = nameof(KnowledgeBase.Cases.BinaryFormatterPatterns.Deserialize); 
             
             var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
             var errors = Test(type, method);

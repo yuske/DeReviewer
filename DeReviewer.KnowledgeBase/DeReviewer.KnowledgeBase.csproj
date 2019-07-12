@@ -42,9 +42,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cases\BinaryFormatterPatterns.cs" />
     <Compile Include="Cases\XslCompiledTransformPatterns.cs" />
     <Compile Include="Cases\XslTransformPatterns.cs" />
-    <Compile Include="Cases\YamlDotNet.cs" />
+    <Compile Include="Cases\YamlDotNetPatterns.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Dsl\Payload.cs" />
     <Compile Include="Dsl\IFormatter.cs" />
@@ -58,6 +59,8 @@
     <Compile Include="Dsl\Pattern.cs" />
     <Compile Include="Dsl\Case.cs" />
     <Compile Include="Dsl\PayloadCast.cs" />
+    <Compile Include="Formatters\Binary.cs" />
+    <Compile Include="Gadgets\TypeConfuseDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,10 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Formatters" />
-    <Folder Include="Gadgets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,7 @@ using YamlDotNet.Serialization;
 
 namespace DeReviewer.KnowledgeBase.Cases
 {
-    public class YamlDotNet : Case
+    public class YamlDotNetPatterns : Case
     {
         public void MostGenericPattern()
         {
