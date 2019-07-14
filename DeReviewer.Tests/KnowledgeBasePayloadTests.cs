@@ -23,11 +23,17 @@ namespace DeReviewer.Tests
             var type = typeof(KnowledgeBase.Cases.BinaryFormatterPatterns);
             var methodName = nameof(KnowledgeBase.Cases.BinaryFormatterPatterns.DeserializeMethodResponse); 
             
+            var id = Guid.NewGuid().ToString();
             var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
-            var errors = Test(type, method);
+            var errors = Test(id, type, method);
             foreach (var error in errors)
             {
                 Console.WriteLine(error);
+            }
+            
+            if (!DeleteFileLoop(id))
+            {
+                errors.Add($"The payload has not been executed ({id})");    
             }
 
             Assert.That(errors, Is.Empty);
@@ -36,6 +42,7 @@ namespace DeReviewer.Tests
         [Test]
         public void AllCases()
         {
+            var files = new Dictionary<string, string>();
             var errors = new List<string>();
             foreach (var type in Loader.GetCaseTypes())
             {
@@ -43,16 +50,26 @@ namespace DeReviewer.Tests
                 foreach (var method in Loader.GetCaseMethods(type))
                 {
                     Console.WriteLine($"    {method}");
-                    errors.AddRange(Test(type, method));
+                    var id = Guid.NewGuid().ToString();
+                    files.Add(id, $"{type}::{method.Name}()");
+                    errors.AddRange(Test(id, type, method));
                 }
             }
             
+            Console.WriteLine("ERRORS:");
+            foreach (var error in errors)
+            {
+                Console.WriteLine(error);
+            }
+            
+            DeleteFilesLoop(files);
+
+            Assert.That(files, Is.Empty);
             Assert.That(errors, Is.Empty);
         }
 
-        private static List<string> Test(Type type, MethodInfo method)
+        private static List<string> Test(string id, Type type, MethodInfo method)
         {
-            var id = Guid.NewGuid().ToString();
             var context = Context.CreateToTest($"echo some-text > {id}",
                 (PayloadGenerationMode mode, Payload payload, ref bool interrupt) =>
                 {
@@ -64,16 +81,33 @@ namespace DeReviewer.Tests
                     DeleteFileLoop(id);
                 });
             
-            var errors = Loader.ExecuteCase(context, type, new[] {method});
-
-            if (!DeleteFileLoop(id))
-            {
-                errors.Add($"The payload has not been executed ({id})");    
-            }
-            
-            return errors;
+            return Loader.ExecuteCase(context, type, new[] {method});
         }
 
+        private static void DeleteFilesLoop(Dictionary<string, string> files)
+        {
+            var attempt = 0;
+            while (attempt++ < 10 && files.Count > 0)
+            {
+                Thread.Sleep(100);
+                
+                var removals = new List<string>();
+                foreach (var id in files.Keys)
+                {
+                    if (File.Exists(id))
+                    {
+                        DeleteFileSafe(id);
+                        removals.Add(id);
+                    }
+                }
+
+                foreach (var id in removals)
+                {
+                    files.Remove(id);
+                }
+            }
+        }
+        
         internal static bool DeleteFileLoop(string fileName)
         {
             var attempt = 0;
