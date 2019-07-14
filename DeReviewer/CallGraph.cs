@@ -7,9 +7,6 @@ namespace DeReviewer
 {
     internal class CallGraph
     {
-        // TODO: add NullCallGraph class
-        public static CallGraph Empty { get; } = new CallGraph();
-        
         public Dictionary<MethodUniqueName, CallGraphNode> Nodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
         public List<CallGraphNode> EntryNodes { get; } = new List<CallGraphNode>();
 

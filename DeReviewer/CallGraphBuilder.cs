@@ -123,9 +123,7 @@ namespace DeReviewer
                 }
             }
 
-            return graph.Nodes.Count > patterns.Count 
-                ? graph 
-                : CallGraph.Empty;
+            return graph; 
         }
     }
 }
