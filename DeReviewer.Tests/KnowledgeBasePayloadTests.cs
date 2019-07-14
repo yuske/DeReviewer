@@ -21,7 +21,7 @@ namespace DeReviewer.Tests
         public void SingleCase()
         {
             var type = typeof(KnowledgeBase.Cases.BinaryFormatterPatterns);
-            var methodName = nameof(KnowledgeBase.Cases.BinaryFormatterPatterns.Deserialize); 
+            var methodName = nameof(KnowledgeBase.Cases.BinaryFormatterPatterns.DeserializeMethodResponse); 
             
             var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
             var errors = Test(type, method);
