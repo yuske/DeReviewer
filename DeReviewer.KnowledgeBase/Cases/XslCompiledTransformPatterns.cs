@@ -2,7 +2,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-
+// ReSharper disable UnusedMember.Local
 // ReSharper disable RedundantCast
 
 namespace DeReviewer.KnowledgeBase.Cases
@@ -14,14 +14,17 @@ namespace DeReviewer.KnowledgeBase.Cases
             var xsl = new XslCompiledTransform();
             
             // load calls with enableScript == true
-            Pattern.CreateBySignature(it => 
-                xsl.Load(it.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>(), XsltSettings.TrustedXslt, null));
+            Pattern.CreateByName(it => 
+                xsl.Load(
+                    it.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>(), 
+                    XsltSettings.TrustedXslt, 
+                    null));
             
             var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
-            xsl.Transform(document, XmlWriter.Create(TextWriter.Null));
+            Pattern.CreateByName(it => xsl.Transform(document, XmlWriter.Create(TextWriter.Null)));
         }
-        
-        public void XsltLoad()
+
+        private void XsltLoad()
         {
             var xsl = new XslCompiledTransform();
             
@@ -30,8 +33,8 @@ namespace DeReviewer.KnowledgeBase.Cases
             xsl.Load((IXPathNavigable)null, XsltSettings.TrustedXslt, null);
             xsl.Load((XmlReader)null, XsltSettings.TrustedXslt, null);
         }
-        
-        public void XsltUsingSafe()
+
+        private void XsltUsingSafe()
         {
             var xsl = new XslCompiledTransform();
 

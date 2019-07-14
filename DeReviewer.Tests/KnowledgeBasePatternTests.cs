@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Reflection;
 using DeReviewer.KnowledgeBase;
 using NUnit.Framework;
 
@@ -21,17 +23,46 @@ namespace DeReviewer.Tests
             var type = typeof(KnowledgeBase.Cases.XslCompiledTransformPatterns);
             var methodName = nameof(KnowledgeBase.Cases.XslCompiledTransformPatterns.XsltLoadWithPayload); 
 
-            var patternGroup = Loader.GetPatternGroup(type, methodName);
+            var context = Context.CreateToAnalyze();
+            var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
+            var errors = Loader.ExecuteCase(context, type, new[] {method});
+            //var patternGroup = Loader.GetPatternGroup(type, methodName);
 
-            // DSL should contains right patterns
-            Assert.That(patternGroup.Patterns.Count, Is.GreaterThan(0));
+            Assert.That(errors, Is.Empty);
+            Assert.That(context.Patterns.Count, Is.GreaterThan(0));
             
             var builder = new CallGraphBuilder(index);
-            var graph = builder.CreateGraph(patternGroup.Patterns);
+            var graph = builder.CreateGraph(context.Patterns);
             
             Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
             Assert.That(graph.EntryNodes.Select(node => node.MethodSignature)
                 .Contains(new MethodUniqueName($"{type.FullName}::{methodName}()")));
+        }
+        
+        [Test]
+        public void AllCases()
+        {
+            foreach (var type in Loader.GetCaseTypes())
+            {
+                Console.WriteLine($"{type}:");
+                foreach (var method in Loader.GetCaseMethods(type))
+                {
+                    Console.WriteLine($"    {method}");
+                    
+                    var context = Context.CreateToAnalyze();
+                    var errors = Loader.ExecuteCase(context, type, new[] {method});
+                    
+                    Assert.That(errors, Is.Empty);
+                    Assert.That(context.Patterns.Count, Is.GreaterThan(0));
+                    
+                    var builder = new CallGraphBuilder(index);
+                    var graph = builder.CreateGraph(context.Patterns);
+            
+                    Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
+                    Assert.That(graph.EntryNodes.Select(node => node.MethodSignature)
+                        .Contains(new MethodUniqueName($"{type.FullName}::{method.Name}()")));
+                }
+            }
         }
     }
 }

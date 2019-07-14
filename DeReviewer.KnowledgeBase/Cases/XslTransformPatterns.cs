@@ -2,7 +2,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Local
 // ReSharper disable RedundantCast
 
 // Suppress the warning of using obsolete type XslTransform
@@ -15,13 +16,13 @@ namespace DeReviewer.KnowledgeBase.Cases
         public void XsltLoadWithPayload()
         {
             var xsl = new XslTransform();
-            Pattern.CreateBySignature(it => xsl.Load(it.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>()));
+            Pattern.CreateByName(it => xsl.Load(it.IsPayloadFrom("MsxslScript.xsl").Cast<XmlReader>()));
             
             var document = new XPathDocument(new StringReader("<?xml version='1.0'?><data></data>"));
-            xsl.Transform(document, null, TextWriter.Null, null);
+            Pattern.CreateByName(it => xsl.Transform(document, null, TextWriter.Null, null));
         }
-        
-        public void XsltLoad()
+
+        private void XsltLoad()
         {
             var xsl = new XslTransform();
             
@@ -40,8 +41,8 @@ namespace DeReviewer.KnowledgeBase.Cases
             Pattern.CreateBySignature(it => xsl.Load((XPathNavigator) null, null));
             Pattern.CreateBySignature(it => xsl.Load((XPathNavigator) null, null, null));
         }
-        
-        public void XsltTransform()
+
+        private void XsltTransform()
         {
             var xsl = new XslTransform();
 
