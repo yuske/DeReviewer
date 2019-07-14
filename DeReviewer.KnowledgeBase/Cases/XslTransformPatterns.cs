@@ -29,7 +29,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             Pattern.CreateBySignature(it => xsl.Load((string)null));            
             Pattern.CreateBySignature(it => xsl.Load((string)null, null));
             
-            //Pattern.Create(it => xsl.Load((XmlReader) null));
+            //Pattern.CreateBySignature(it => xsl.Load((XmlReader) null));
             Pattern.CreateBySignature(it => xsl.Load((XmlReader) null, null));
             Pattern.CreateBySignature(it => xsl.Load((XmlReader) null, null, null));
             
