@@ -35,7 +35,7 @@ namespace DeReviewer.Tests
             var graph = builder.CreateGraph(context.Patterns);
             
             Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
-            Assert.That(graph.EntryNodes.Select(node => node.MethodSignature)
+            Assert.That(graph.EntryNodes.Keys
                 .Contains(new MethodUniqueName($"{type.FullName}::{methodName}()")));
         }
         
@@ -59,7 +59,7 @@ namespace DeReviewer.Tests
                     var graph = builder.CreateGraph(context.Patterns);
             
                     Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
-                    Assert.That(graph.EntryNodes.Select(node => node.MethodSignature)
+                    Assert.That(graph.EntryNodes.Keys
                         .Contains(new MethodUniqueName($"{type.FullName}::{method.Name}()")));
                 }
             }

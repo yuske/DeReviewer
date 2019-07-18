@@ -48,10 +48,22 @@ namespace DeReviewer
             }
         }
 
+        private class ProcessingEntity
+        {
+            public ProcessingEntity(MethodUniqueName signature, CallGraphNode node)
+            {
+                Signature = signature;
+                Node = node;
+            }
+
+            public MethodUniqueName Signature { get; }
+            public CallGraphNode Node { get; }
+        }
+
         private CallGraph CreateGraphInternal(List<PatternInfo> patterns)
         {
             var graph = new CallGraph();
-            var processingNodes = new Queue<CallGraphNode>();
+            var processingEntities = new Queue<ProcessingEntity>();
             foreach (var pattern in patterns)
             {
                 var calls = index.GetCalls(pattern);
@@ -68,19 +80,16 @@ namespace DeReviewer
                         new List<MethodUniqueName>(0));
                     var node = new CallGraphNode(info);
                     graph.Nodes.Add(pattern.Method, node);
-                    processingNodes.Enqueue(node);
+                    processingEntities.Enqueue(new ProcessingEntity(node.MethodSignature, node));
                 }
             }
             
-            while (processingNodes.Count > 0)
+            while (processingEntities.Count > 0)
             {
-                var node = processingNodes.Dequeue();
-                var calls = index.GetCalls(node.MethodSignature, node.AssemblyInfo); 
-                if (calls.Count == 0)
-                {
-                    graph.EntryNodes.Add(node);
-                }
-                else
+                var entity = processingEntities.Dequeue();
+                
+                var calls = index.GetCalls(entity.Signature, entity.Node.AssemblyInfo);
+                if (calls.Count != 0)
                 {
                     foreach (var callInfo in calls)
                     {
@@ -95,32 +104,35 @@ namespace DeReviewer
                             stat.IgnoredOpcodes.Add(callInfo.Opcode.Code);
                             continue;
                         }
-                        
-                        HandleCallGraphNode(callInfo.Signature);
-                        foreach (var overrideMethodSignature in callInfo.OverrideSignatures)
+
+                        if (graph.Nodes.TryGetValue(callInfo.Signature, out var callingNode))
                         {
-                            HandleCallGraphNode(overrideMethodSignature);
+                            callingNode.OutNodes.Add(entity.Node);
+                            entity.Node.InNodes.Add(callingNode);
                         }
-
-                        void HandleCallGraphNode(MethodUniqueName signature)
+                        else
                         {
-                            if (graph.Nodes.TryGetValue(signature, out var existingNode))
-                            {
-                                existingNode.OutNodes.Add(node);
-                                node.InNodes.Add(existingNode);
-                            }
-                            else
-                            {
-                                var newNode = new CallGraphNode(callInfo);
-                                newNode.OutNodes.Add(node);
-                                node.InNodes.Add(newNode);
+                            callingNode = new CallGraphNode(callInfo);
+                            callingNode.OutNodes.Add(entity.Node);
+                            entity.Node.InNodes.Add(callingNode);
 
-                                graph.Nodes.Add(signature, newNode);
-                                processingNodes.Enqueue(newNode);
+                            graph.Nodes.Add(callInfo.Signature, callingNode);
+                            processingEntities.Enqueue(new ProcessingEntity(callInfo.Signature, callingNode));
+
+                            foreach (var overrideSignature in callInfo.OverrideSignatures)
+                            {
+                                processingEntities.Enqueue(new ProcessingEntity(overrideSignature, callingNode));
                             }
                         }
                     }
                 }
+            }
+            
+            foreach (var node in graph.Nodes.Values)
+            {
+                if (node.InNodes.Count != 0) continue;
+                
+                graph.EntryNodes.Add(node.MethodSignature, node);
             }
 
             return graph; 

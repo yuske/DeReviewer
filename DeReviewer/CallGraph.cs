@@ -8,39 +8,39 @@ namespace DeReviewer
     internal class CallGraph
     {
         public Dictionary<MethodUniqueName, CallGraphNode> Nodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
-        public List<CallGraphNode> EntryNodes { get; } = new List<CallGraphNode>();
+        public Dictionary<MethodUniqueName, CallGraphNode> EntryNodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
 
         public bool IsEmpty => Nodes.Count == 0;
 
         public void RemoveDuplicatePaths()
         {
-            void RemoveDuplicateFrom(List<CallGraphNode> list)
-            {
-                var cache = new HashSet<CallGraphNode>();
-                for (var i = list.Count - 1; i >= 0; i--)
-                {
-                    var item = list[i];
-                    if (!cache.Contains(item))
-                    {
-                        cache.Add(item);
-                    }
-                    else
-                    {
-                        list.RemoveAt(i);
-                    }
-                }
-            }
-            
             foreach (var node in Nodes.Values)
             {
                 RemoveDuplicateFrom(node.OutNodes);
                 RemoveDuplicateFrom(node.InNodes);
+                
+                void RemoveDuplicateFrom(List<CallGraphNode> list)
+                {
+                    var cache = new HashSet<CallGraphNode>();
+                    for (var i = list.Count - 1; i >= 0; i--)
+                    {
+                        var item = list[i];
+                        if (cache.Contains(item) || item == node)
+                        {
+                            list.RemoveAt(i);
+                        }
+                        else
+                        {
+                            cache.Add(item);
+                        }
+                    }
+                }
             }
         }
 
         public void RemoveNonPublicEntryNodes()
         {
-            var processingNodes = new Queue<CallGraphNode>(EntryNodes);
+            var processingNodes = new Queue<CallGraphNode>(EntryNodes.Values);
             while (processingNodes.Count > 0)
             {
                 var node = processingNodes.Dequeue();
@@ -55,18 +55,18 @@ namespace DeReviewer
                         (outNode.InNodes.Count == 1 && outNode.Equals(outNode.InNodes[0])))    // simple recursive calls
                     {
                         // TODO: Add detection of recursive calls like A() -> B() -> A()
-                        if (!outNode.IsPublic)
+                        if (outNode.IsPublic)
                         {
-                            processingNodes.Enqueue(outNode);
+                            EntryNodes.Add(outNode.MethodSignature, outNode);
                         }
                         else
                         {
-                            EntryNodes.Add(outNode);
+                            processingNodes.Enqueue(outNode);
                         }
                     }
                 }
                         
-                EntryNodes.Remove(node);
+                EntryNodes.Remove(node.MethodSignature);
                 Nodes.Remove(node.MethodSignature);
             }
         }

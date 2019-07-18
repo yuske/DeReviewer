@@ -22,5 +22,7 @@ namespace DeReviewer
 
         public List<CallGraphNode> InNodes { get; }
         public List<CallGraphNode> OutNodes { get; }
+
+        public override string ToString() => $"{MethodSignature} v.{AssemblyInfo.Version}";
     }
 }
