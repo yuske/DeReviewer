@@ -88,7 +88,7 @@ namespace DeReviewer
             {
                 var entity = processingEntities.Dequeue();
                 
-                var calls = index.GetCalls(entity.Signature, entity.Node.AssemblyInfo);
+                var calls = index.GetCalls(entity.Signature/*, entity.Node.AssemblyInfo*/);
                 if (calls.Count != 0)
                 {
                     foreach (var callInfo in calls)
@@ -107,8 +107,9 @@ namespace DeReviewer
 
                         if (graph.Nodes.TryGetValue(callInfo.Signature, out var callingNode))
                         {
-                            callingNode.OutNodes.Add(entity.Node);
-                            entity.Node.InNodes.Add(callingNode);
+                            // TODO: need to add a new kind of cycled edge to remove recursive calls in RemoveNonPublicEntryNodes 
+                            //callingNode.OutNodes.Add(entity.Node);
+                            //entity.Node.InNodes.Add(callingNode);
                         }
                         else
                         {
