@@ -28,5 +28,7 @@ namespace DeReviewer.KnowledgeBase
         {
             throw new NotImplementedException();
         }
+
+        public static implicit operator Stream(Payload payload) => payload.Data;
     }
 }

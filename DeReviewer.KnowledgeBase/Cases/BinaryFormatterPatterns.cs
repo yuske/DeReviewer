@@ -1,4 +1,3 @@
-using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using DeReviewer.KnowledgeBase.Formatters;
 using DeReviewer.KnowledgeBase.Gadgets;
@@ -12,7 +11,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var serializer = new BinaryFormatter();
             Pattern.CreateBySignature(it =>
                 serializer.Deserialize(
-                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>()));
+                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>()));
         }
         
         public void DeserializeHeaderHandler()
@@ -20,7 +19,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var serializer = new BinaryFormatter();
             Pattern.CreateBySignature(it =>
                 serializer.Deserialize(
-                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>(),
+                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>(),
                     null));
         }
         
@@ -29,7 +28,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var serializer = new BinaryFormatter();
             Pattern.CreateBySignature(it =>
                 serializer.DeserializeMethodResponse(
-                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>(),
+                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>(),
                     null,
                     null));
         }
@@ -39,7 +38,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var serializer = new BinaryFormatter();
             Pattern.CreateBySignature(it =>
                 serializer.UnsafeDeserialize(
-                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>(),
+                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>(),
                     null));
         }
 
@@ -48,7 +47,7 @@ namespace DeReviewer.KnowledgeBase.Cases
             var serializer = new BinaryFormatter();
             Pattern.CreateBySignature(it =>
                 serializer.UnsafeDeserializeMethodResponse(
-                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>().Cast<Stream>(),
+                    it.IsPayloadOf<TypeConfuseDelegate>().Format<Binary>(),
                     null,
                     null));
         }
