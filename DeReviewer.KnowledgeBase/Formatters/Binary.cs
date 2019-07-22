@@ -11,7 +11,7 @@ namespace DeReviewer.KnowledgeBase.Formatters
             var stream = new MemoryStream();
             binaryFormatter.Serialize(stream, gadget);
             stream.Position = 0;
-            return new Payload(stream);
+            return new Payload(stream.ToArray());
         }
     }
 }

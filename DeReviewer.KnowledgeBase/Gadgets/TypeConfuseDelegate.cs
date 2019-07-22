@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace DeReviewer.KnowledgeBase.Gadgets
 {
+    // TypeConfuseDelegate gadget by James Forshaw
     internal class TypeConfuseDelegate : IGadget
     {
         public object Build(string command)

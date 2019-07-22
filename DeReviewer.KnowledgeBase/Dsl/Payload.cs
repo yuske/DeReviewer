@@ -6,29 +6,27 @@ namespace DeReviewer.KnowledgeBase
 {
     public class Payload
     {
-        public Payload(Stream data)
+        private readonly byte[] data;
+        
+        public Payload(byte[] data)
         {
-            Data = data;
+            this.data = data;
         }
 
         public Payload(string data)
         {
-            Data = new MemoryStream(Encoding.UTF8.GetBytes(data));
+            this.data = Encoding.UTF8.GetBytes(data);
         }
 
-        public Stream Data { get; }
+        public Stream ToStream() => new MemoryStream(data);
 
-        public override string ToString()
-        {
-            var reader = new StreamReader(Data, Encoding.UTF8);
-            return reader.ReadToEnd();
-        }
+        public override string ToString() => Encoding.UTF8.GetString(data);
 
         public string ToBase64String()
         {
             throw new NotImplementedException();
         }
 
-        public static implicit operator Stream(Payload payload) => payload.Data;
+        public static implicit operator Stream(Payload payload) => payload.ToStream();
     }
 }

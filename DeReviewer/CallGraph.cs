@@ -81,6 +81,9 @@ namespace DeReviewer
                     Path.GetFileNameWithoutExtension(path) + ".gv");
                 var graphViz = new GraphViz(this);
                 graphViz.Save(pathGraphVizFile);
+                if (Nodes.Count < 0 || Nodes.Count > 1000)
+                    return;
+                
                 var process = Process.Start(new ProcessStartInfo
                 {
                     FileName = "dot",

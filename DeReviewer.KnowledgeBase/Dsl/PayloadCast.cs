@@ -10,10 +10,11 @@ namespace DeReviewer.KnowledgeBase
             T result;
             
             if (Match(() => payload.ToString(), out result)) return result;
-            if (Match(() => payload.Data, out result)) return result;
+            if (Match(() => payload.ToStream(), out result)) return result;
             if (Match(() => new StringReader(payload.ToString()), out result)) return result;    // for TextReader 
             if (Match(() => new YamlDotNet.Core.Parser(payload.Cast<TextReader>()), out result)) return result;
             if (Match(() => System.Xml.XmlReader.Create(payload.Cast<TextReader>()), out result)) return result;
+            if (Match(() => new System.Xaml.XamlXmlReader(payload.ToStream()), out result)) return result;
             
             throw new NotImplementedException(
                 $"Must add an implementation of payload converting to '{typeof(T)}' in {typeof(PayloadCast)}::{nameof(Cast)}<T>()");

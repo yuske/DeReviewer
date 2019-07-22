@@ -20,8 +20,8 @@ namespace DeReviewer.Tests
         //[Ignore("for debugging only, change type and methodName vars for your case")]
         public void SingleCase()
         {
-            var type = typeof(KnowledgeBase.Cases.BinaryFormatterPatterns);
-            var methodName = nameof(KnowledgeBase.Cases.BinaryFormatterPatterns.DeserializeMethodResponse); 
+            var type = typeof(KnowledgeBase.Cases.XamlMarkupPatterns);
+            var methodName = nameof(KnowledgeBase.Cases.XamlMarkupPatterns.XamlReaderLoadAsync); 
             
             var id = Guid.NewGuid().ToString();
             var method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Instance);
