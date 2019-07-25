@@ -15,11 +15,11 @@ namespace DeReviewer.KnowledgeBase.Gadgets
                 Arguments = $"/c {command}"
             };
             
-            var dict = new StringDictionary();
+            var dictionary = new StringDictionary();
             // ReSharper disable once PossibleNullReferenceException
             startInfo.GetType()
                 .GetField("environmentVariables", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(startInfo, dict);
+                .SetValue(startInfo, dictionary);
             
             var process = new Process
             {

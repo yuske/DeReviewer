@@ -18,7 +18,7 @@ namespace DeReviewer.KnowledgeBase
             this.data = Encoding.UTF8.GetBytes(data);
         }
 
-        public Stream ToStream() => new MemoryStream(data);
+        public MemoryStream ToStream() => new MemoryStream(data);
 
         public override string ToString() => Encoding.UTF8.GetString(data);
 

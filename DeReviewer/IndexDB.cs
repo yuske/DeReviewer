@@ -63,7 +63,14 @@ namespace DeReviewer
             {
                 try
                 {
-                    assemblies.Add(ModuleDefMD.Load(fileName));
+                    var module = ModuleDefMD.Load(fileName);
+                    if (module.HasNativeEntryPoint)
+                    {
+                        Console.WriteLine($"Skip load '{Path.GetFileName(fileName)}' with native entry point");
+                        return;
+                    }
+                    
+                    assemblies.Add(module);
                 }
                 catch (Exception e)
                 {
