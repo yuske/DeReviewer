@@ -6,17 +6,17 @@ using dnlib.DotNet;
 
 namespace DeReviewer.Analysis
 {
-    public static class MethodUniqueNameExtensions
+    public static class MethodUniqueSignatureExtensions
     {
-        public static MethodUniqueName CreateMethodUniqueName(this MethodInfo method)
+        public static MethodUniqueSignature CreateMethodUniqueName(this MethodInfo method)
         {
             var fullName = $"{method.DeclaringType.FullName}::{method.Name}" +
                            $"({String.Join(",", method.GetParameters().Select(p => p.ParameterType.FullName))})";
             
-            return new MethodUniqueName(fullName);
+            return new MethodUniqueSignature(fullName);
         }
 
-        internal static MethodUniqueName CreateMethodUniqueName(this IMethod method)
+        internal static MethodUniqueSignature CreateMethodUniqueName(this IMethod method)
         {
             string fullName;
             
@@ -26,17 +26,17 @@ namespace DeReviewer.Analysis
             if (firstSpace < 0 || firstSpace >= name.Length - 1)
             {
                 Console.WriteLine($"ERROR: The method {name} doesn't contain return value");
-                fullName = MethodUniqueNameExtensions.ReplaceGenericParameters(new StringBuilder(name));
+                fullName = ReplaceGenericParameters(new StringBuilder(name));
             }
             else
             {
                 // remove return value
                 var sb = new StringBuilder(name);
                 sb.Remove(0, firstSpace + 1);
-                fullName = MethodUniqueNameExtensions.ReplaceGenericParameters(sb);
+                fullName = ReplaceGenericParameters(sb);
             }
             
-            return new MethodUniqueName(fullName);
+            return new MethodUniqueSignature(fullName);
         }
         
         // temporary solution to analyze generic calls

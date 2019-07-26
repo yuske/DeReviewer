@@ -2,16 +2,16 @@ using System.Text;
 
 namespace DeReviewer.Analysis
 {
-    public sealed class MethodUniqueName
+    public sealed class MethodUniqueSignature
     {
         private readonly string fullName;
             
-        public static MethodUniqueName Create(string fullNameWithoutReturnType) =>
-            new MethodUniqueName(
-                MethodUniqueNameExtensions.ReplaceGenericParameters(
+        public static MethodUniqueSignature Create(string fullNameWithoutReturnType) =>
+            new MethodUniqueSignature(
+                MethodUniqueSignatureExtensions.ReplaceGenericParameters(
                     new StringBuilder(fullNameWithoutReturnType)));
 
-        internal MethodUniqueName(string fullName)
+        internal MethodUniqueSignature(string fullName)
         {
             this.fullName = fullName;
         }
@@ -22,7 +22,7 @@ namespace DeReviewer.Analysis
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj is MethodUniqueName c) return Equals(c);
+            if (obj is MethodUniqueSignature c) return Equals(c);
             return false;
         }
 
@@ -31,17 +31,17 @@ namespace DeReviewer.Analysis
             return fullName.GetHashCode();
         }
 
-        public static bool operator ==(MethodUniqueName left, MethodUniqueName right)
+        public static bool operator ==(MethodUniqueSignature left, MethodUniqueSignature right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(MethodUniqueName left, MethodUniqueName right)
+        public static bool operator !=(MethodUniqueSignature left, MethodUniqueSignature right)
         {
             return !Equals(left, right);
         }
         
-        private bool Equals(MethodUniqueName other)
+        private bool Equals(MethodUniqueSignature other)
         {
             return string.Equals(fullName, other.fullName);
         }

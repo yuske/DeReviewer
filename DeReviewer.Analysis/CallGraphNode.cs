@@ -16,7 +16,7 @@ namespace DeReviewer.Analysis
         public AssemblyInfo AssemblyInfo => info.AssemblyInfo;
         public string AssemblyName => info.AssemblyInfo.Name;
 
-        public MethodUniqueName MethodSignature => info.Signature;
+        public MethodUniqueSignature MethodSignature => info.Signature;
 
         public bool IsPublic => info.IsPublic;
 

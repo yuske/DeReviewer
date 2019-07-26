@@ -25,7 +25,7 @@ namespace DeReviewer.Analysis
         private readonly string path;
         
         //<method call> -> <assembly of the method call> -> <method definition w/ (1)>
-        private Dictionary<MethodUniqueName, Dictionary<AssemblyInfo, List<CallInfo>>> callers;
+        private Dictionary<MethodUniqueSignature, Dictionary<AssemblyInfo, List<CallInfo>>> callers;
         
         public IndexDb(string path)
         {
@@ -35,7 +35,7 @@ namespace DeReviewer.Analysis
         public void Build()
         {
             var timer = Stopwatch.StartNew();
-            callers = new Dictionary<MethodUniqueName, Dictionary<AssemblyInfo, List<CallInfo>>>();
+            callers = new Dictionary<MethodUniqueSignature, Dictionary<AssemblyInfo, List<CallInfo>>>();
             var assemblies = new List<ModuleDefMD>();
 
             if (File.Exists(path))
@@ -79,7 +79,7 @@ namespace DeReviewer.Analysis
         }
 
         // TODO: use IReadOnlyCollection<CallInfo> 
-        public List<CallInfo> GetCalls(MethodUniqueName methodSignature)
+        public List<CallInfo> GetCalls(MethodUniqueSignature methodSignature)
         {
             if (callers.TryGetValue(methodSignature, out var callInfoMap))
             {
@@ -100,7 +100,7 @@ namespace DeReviewer.Analysis
             return empty;
         }
 
-        public List<CallInfo> GetCalls(MethodUniqueName methodSignature, AssemblyInfo assemblyInfo)
+        public List<CallInfo> GetCalls(MethodUniqueSignature methodSignature, AssemblyInfo assemblyInfo)
         {
             if (assemblyInfo == null ||
                 assemblyInfo.Name == (UTF8String) null ||

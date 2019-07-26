@@ -49,13 +49,13 @@ namespace DeReviewer.Analysis
 
         private class ProcessingEntity
         {
-            public ProcessingEntity(MethodUniqueName signature, CallGraphNode node)
+            public ProcessingEntity(MethodUniqueSignature signature, CallGraphNode node)
             {
                 Signature = signature;
                 Node = node;
             }
 
-            public MethodUniqueName Signature { get; }
+            public MethodUniqueSignature Signature { get; }
             public CallGraphNode Node { get; }
         }
 
@@ -76,7 +76,7 @@ namespace DeReviewer.Analysis
                         pattern.Method,
                         OpCodes.Call, 
                         true,
-                        new List<MethodUniqueName>(0));
+                        new List<MethodUniqueSignature>(0));
                     var node = new CallGraphNode(info);
                     graph.Nodes.Add(pattern.Method, node);
                     processingEntities.Enqueue(new ProcessingEntity(node.MethodSignature, node));

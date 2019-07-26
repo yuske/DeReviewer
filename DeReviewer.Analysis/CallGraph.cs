@@ -7,8 +7,8 @@ namespace DeReviewer.Analysis
 {
     public class CallGraph
     {
-        public Dictionary<MethodUniqueName, CallGraphNode> Nodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
-        public Dictionary<MethodUniqueName, CallGraphNode> EntryNodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
+        public Dictionary<MethodUniqueSignature, CallGraphNode> Nodes { get; } = new Dictionary<MethodUniqueSignature, CallGraphNode>();
+        public Dictionary<MethodUniqueSignature, CallGraphNode> EntryNodes { get; } = new Dictionary<MethodUniqueSignature, CallGraphNode>();
 
         public bool IsEmpty => Nodes.Count == 0;
 

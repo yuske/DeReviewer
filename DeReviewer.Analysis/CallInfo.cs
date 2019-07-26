@@ -5,8 +5,8 @@ namespace DeReviewer.Analysis
 {
     public class CallInfo
     {
-        public CallInfo(AssemblyInfo assemblyInfo, MethodUniqueName signature, OpCode opcode, bool isPublic, 
-            List<MethodUniqueName> overrideSignatures)
+        public CallInfo(AssemblyInfo assemblyInfo, MethodUniqueSignature signature, OpCode opcode, bool isPublic, 
+            List<MethodUniqueSignature> overrideSignatures)
         {
             AssemblyInfo = assemblyInfo;
             Signature = signature;
@@ -17,12 +17,12 @@ namespace DeReviewer.Analysis
 
         public AssemblyInfo AssemblyInfo { get; }
         
-        public MethodUniqueName Signature { get; }
+        public MethodUniqueSignature Signature { get; }
         
         public OpCode Opcode { get; }
         
         public bool IsPublic { get; }
         
-        public List<MethodUniqueName> OverrideSignatures { get; }
+        public List<MethodUniqueSignature> OverrideSignatures { get; }
     }
 }

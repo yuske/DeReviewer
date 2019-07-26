@@ -37,7 +37,7 @@ namespace DeReviewer.Tests
             
             Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
             Assert.That(graph.EntryNodes.Keys
-                .Contains(MethodUniqueName.Create($"{type.FullName}::{methodName}()")));
+                .Contains(MethodUniqueSignature.Create($"{type.FullName}::{methodName}()")));
         }
         
         [Test]
@@ -61,7 +61,7 @@ namespace DeReviewer.Tests
             
                     Assert.That(graph.EntryNodes.Count, Is.GreaterThan(0));
                     Assert.That(graph.EntryNodes.Keys
-                        .Contains(MethodUniqueName.Create($"{type.FullName}::{method.Name}()")));
+                        .Contains(MethodUniqueSignature.Create($"{type.FullName}::{method.Name}()")));
                 }
             }
         }

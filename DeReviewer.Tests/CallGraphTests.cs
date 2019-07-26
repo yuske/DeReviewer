@@ -37,10 +37,10 @@ namespace DeReviewer.Tests
         {
             var info = new CallInfo(
                 new AssemblyInfo(UTF8String.Empty, AssemblyInfo.EmptyVersion), 
-                MethodUniqueName.Create(name),
+                MethodUniqueSignature.Create(name),
                 OpCodes.Call, 
                 true,
-                new List<MethodUniqueName>(0));
+                new List<MethodUniqueSignature>(0));
             
             return new CallGraphNode(info);
         }

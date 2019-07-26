@@ -46,8 +46,8 @@
         <Compile Include="GraphViz.cs" />
         <Compile Include="IndexDB.cs" />
         <Compile Include="MethodDefExtensions.cs" />
-        <Compile Include="MethodUniqueName.cs" />
-        <Compile Include="MethodUniqueNameExtensions.cs" />
+        <Compile Include="MethodUniqueSignature.cs" />
+        <Compile Include="MethodUniqueSignatureExtensions.cs" />
         <Compile Include="PatternInfo.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
