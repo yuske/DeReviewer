@@ -3,7 +3,7 @@ using dnlib.DotNet;
 
 namespace DeReviewer
 {
-    internal sealed class AssemblyInfo
+    public sealed class AssemblyInfo
     {
         public static readonly Version EmptyVersion = new Version();
         

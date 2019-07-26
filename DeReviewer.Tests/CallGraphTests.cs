@@ -36,7 +36,7 @@ namespace DeReviewer.Tests
         {
             var info = new CallInfo(
                 new AssemblyInfo(UTF8String.Empty, AssemblyInfo.EmptyVersion), 
-                new MethodUniqueName(name),
+                MethodUniqueName.Create(name),
                 OpCodes.Call, 
                 true,
                 new List<MethodUniqueName>(0));

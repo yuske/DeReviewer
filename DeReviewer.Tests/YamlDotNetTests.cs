@@ -14,11 +14,11 @@ namespace DeReviewer.Tests
         [Test]
         public void MethodUniqueNameGenericTest()
         {
-            var name = new MethodUniqueName(
+            var name = MethodUniqueName.Create(
                 "YamlDotNet.Serialization.BuilderSkeleton`1<YamlDotNet.Serialization.DeserializerBuilder>::.ctor()");
             Assert.That(name.ToString(), Is.EqualTo("YamlDotNet.Serialization.BuilderSkeleton::.ctor()"));
             
-            var name2 = new MethodUniqueName("System.Collections.Generic.IDictionary`2<System.String,System.Object> YamlDotNet.Serialization.Deserializer::Deserialize<System.Collections.Generic.IDictionary`2<System.String,System.Object>>(System.String)");
+            var name2 = MethodUniqueName.Create("System.Collections.Generic.IDictionary`2<System.String,System.Object> YamlDotNet.Serialization.Deserializer::Deserialize<System.Collections.Generic.IDictionary`2<System.String,System.Object>>(System.String)");
             Assert.That(name2.ToString(), Is.EqualTo("System.Collections.Generic.IDictionary YamlDotNet.Serialization.Deserializer::Deserialize(System.String)"));
         }
         
@@ -40,7 +40,7 @@ namespace DeReviewer.Tests
                                 if (name.Contains("Deserializer::Deserialize"))
                                 {
                                     count++;
-                                    var m = new MethodUniqueName(methodOperand);
+                                    var m = methodOperand.CreateMethodUniqueName();
                                     Assert.That(m.ToString(), Is.EqualTo("YamlDotNet.Serialization.Deserializer::Deserialize(System.String)"));
                                 }
                             }

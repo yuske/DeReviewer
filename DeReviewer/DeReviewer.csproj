@@ -47,17 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="CallGraph.cs" />
-    <Compile Include="CallGraphBuilder.cs" />
-    <Compile Include="CallGraphNode.cs" />
-    <Compile Include="CallInfo.cs" />
     <Compile Include="CommandLine\AnalyzeOptions.cs" />
     <Compile Include="CommandLine\PayloadOptions.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="GraphViz.cs" />
-    <Compile Include="IndexDB.cs" />
-    <Compile Include="MethodDefExtensions.cs" />
     <Compile Include="PatternGroup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,13 +59,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeReviewer.Analysis\DeReviewer.Analysis.csproj">
+      <Project>{495f718a-d925-4639-b6b9-00d00a17b3f6}</Project>
+      <Name>DeReviewer.Analysis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DeReviewer.KnowledgeBase\DeReviewer.KnowledgeBase.csproj">
       <Project>{231e8889-d242-419c-9980-012625859738}</Project>
       <Name>DeReviewer.KnowledgeBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\dnlib\src\dnlib.csproj">
-      <Project>{f1b76fe5-8338-4bf6-9570-b285e852952b}</Project>
-      <Name>dnlib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

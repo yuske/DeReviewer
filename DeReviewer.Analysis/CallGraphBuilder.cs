@@ -7,7 +7,7 @@ using dnlib.DotNet;
 
 namespace DeReviewer
 {
-    internal class CallGraphBuilder
+    public class CallGraphBuilder
     {
         private struct Statistic
         {

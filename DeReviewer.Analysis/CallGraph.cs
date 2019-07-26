@@ -5,7 +5,7 @@ using System.IO;
 
 namespace DeReviewer
 {
-    internal class CallGraph
+    public class CallGraph
     {
         public Dictionary<MethodUniqueName, CallGraphNode> Nodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();
         public Dictionary<MethodUniqueName, CallGraphNode> EntryNodes { get; } = new Dictionary<MethodUniqueName, CallGraphNode>();

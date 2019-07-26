@@ -8,7 +8,7 @@ using DeReviewer.KnowledgeBase.Internals;
 
 namespace DeReviewer
 {
-    internal class IndexDb
+    public class IndexDb
     {
         private struct Statistic
         {
@@ -202,10 +202,10 @@ namespace DeReviewer
                                 {
                                     newInfo = new CallInfo(
                                         new AssemblyInfo(module.Assembly.Name, module.Assembly.Version),
-                                        new MethodUniqueName(methodDef),
+                                        methodDef.CreateMethodUniqueName(),
                                         instruction.OpCode,
                                         methodDef.IsPublicGlobalVisibility(),
-                                        methodDef.FindOverrides().Select(md => new MethodUniqueName(md)).ToList());
+                                        methodDef.FindOverrides().Select(md => md.CreateMethodUniqueName()).ToList());
                                     cacheInfo = newInfo;
                                 }
                                 else
@@ -222,7 +222,7 @@ namespace DeReviewer
                                 var assemblyInfo = new AssemblyInfo(
                                     methodOperand.DeclaringType.DefinitionAssembly.Name,
                                     methodOperand.DeclaringType.DefinitionAssembly.Version);
-                                var key = new MethodUniqueName(methodOperand);
+                                var key = methodOperand.CreateMethodUniqueName();
                                 if (callers.TryGetValue(key, out var callInfoMap))
                                 {
                                     if (callInfoMap.TryGetValue(assemblyInfo, out var list))

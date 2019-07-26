@@ -56,9 +56,7 @@
     <Compile Include="Dsl\Payload.cs" />
     <Compile Include="Dsl\IFormatter.cs" />
     <Compile Include="Dsl\IGadget.cs" />
-    <Compile Include="Dsl\Internals\MethodUniqueName.cs" />
     <Compile Include="Dsl\Internals\PatternBuilder.cs" />
-    <Compile Include="Dsl\Internals\PatternInfo.cs" />
     <Compile Include="Dsl\Internals\PatternVisitor.cs" />
     <Compile Include="Dsl\Internals\PayloadBuilder.cs" />
     <Compile Include="Dsl\It.cs" />
@@ -78,13 +76,13 @@
     <Content Include="Payloads\ObjectDataProvider.yaml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dnlib\src\dnlib.csproj">
-      <Project>{f1b76fe5-8338-4bf6-9570-b285e852952b}</Project>
-      <Name>dnlib</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\DeReviewer.Analysis\DeReviewer.Analysis.csproj">
+      <Project>{495f718a-d925-4639-b6b9-00d00a17b3f6}</Project>
+      <Name>DeReviewer.Analysis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

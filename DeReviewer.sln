@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeReviewer.Tests", "DeRevie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeReviewer.KnowledgeBase", "DeReviewer.KnowledgeBase\DeReviewer.KnowledgeBase.csproj", "{231E8889-D242-419C-9980-012625859738}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeReviewer.Analysis", "DeReviewer.Analysis\DeReviewer.Analysis.csproj", "{495F718A-D925-4639-B6B9-00D00A17B3F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{231E8889-D242-419C-9980-012625859738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{231E8889-D242-419C-9980-012625859738}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{231E8889-D242-419C-9980-012625859738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{495F718A-D925-4639-B6B9-00D00A17B3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495F718A-D925-4639-B6B9-00D00A17B3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495F718A-D925-4639-B6B9-00D00A17B3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{495F718A-D925-4639-B6B9-00D00A17B3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

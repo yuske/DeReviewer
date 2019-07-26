@@ -75,6 +75,10 @@
     <Compile Include="YamlDotNetTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DeReviewer.Analysis\DeReviewer.Analysis.csproj">
+      <Project>{495f718a-d925-4639-b6b9-00d00a17b3f6}</Project>
+      <Name>DeReviewer.Analysis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DeReviewer.KnowledgeBase\DeReviewer.KnowledgeBase.csproj">
       <Project>{231e8889-d242-419c-9980-012625859738}</Project>
       <Name>DeReviewer.KnowledgeBase</Name>

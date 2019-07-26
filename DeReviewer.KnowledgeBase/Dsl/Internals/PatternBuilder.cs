@@ -99,7 +99,7 @@ namespace DeReviewer.KnowledgeBase.Internals
             {
                 context.Patterns.Add(
                     new PatternInfo(
-                        new MethodUniqueName(methodCall.Method),
+                        methodCall.Method.CreateMethodUniqueName(),
                         requiredOlderVersion));
                 
                 return;
@@ -115,7 +115,7 @@ namespace DeReviewer.KnowledgeBase.Internals
                 
                 context.Patterns.Add(
                     new PatternInfo(
-                        new MethodUniqueName(declaringTypeMethod),
+                        declaringTypeMethod.CreateMethodUniqueName(),
                         requiredOlderVersion));
             }
         }

@@ -3,7 +3,7 @@ using dnlib.DotNet.Emit;
 
 namespace DeReviewer
 {
-    internal class CallInfo
+    public class CallInfo
     {
         public CallInfo(AssemblyInfo assemblyInfo, MethodUniqueName signature, OpCode opcode, bool isPublic, 
             List<MethodUniqueName> overrideSignatures)

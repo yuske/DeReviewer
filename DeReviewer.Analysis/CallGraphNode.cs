@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace DeReviewer
 {
-    internal class CallGraphNode
+    public class CallGraphNode
     {
         private readonly CallInfo info;
 
