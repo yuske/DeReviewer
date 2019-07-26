@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public sealed class MethodUniqueName
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public class CallGraphNode
     {

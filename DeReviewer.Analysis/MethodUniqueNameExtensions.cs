@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using dnlib.DotNet;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public static class MethodUniqueNameExtensions
     {

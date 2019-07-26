@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using dnlib.DotNet.Emit;
-using DeReviewer.KnowledgeBase.Internals;
 using dnlib.DotNet;
+using dnlib.DotNet.Emit;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public class CallGraphBuilder
     {

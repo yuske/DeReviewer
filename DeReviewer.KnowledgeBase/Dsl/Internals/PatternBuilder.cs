@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using DeReviewer.Analysis;
 
 namespace DeReviewer.KnowledgeBase.Internals
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using dnlib.DotNet;
+using DeReviewer.Analysis;
 using NUnit.Framework;
 
 namespace DeReviewer.Tests

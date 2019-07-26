@@ -1,6 +1,6 @@
 using System;
 
-namespace DeReviewer.KnowledgeBase.Internals
+namespace DeReviewer.Analysis
 {
     public class PatternInfo
     {

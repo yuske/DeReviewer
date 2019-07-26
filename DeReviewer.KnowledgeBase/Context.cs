@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DeReviewer.KnowledgeBase.Internals;
+using DeReviewer.Analysis;
 
 namespace DeReviewer.KnowledgeBase
 {

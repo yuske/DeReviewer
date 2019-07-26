@@ -1,7 +1,7 @@
 using System;
 using dnlib.DotNet;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public sealed class AssemblyInfo
     {

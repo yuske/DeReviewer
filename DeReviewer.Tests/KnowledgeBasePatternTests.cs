@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using DeReviewer.Analysis;
 using DeReviewer.KnowledgeBase;
 using NUnit.Framework;
 

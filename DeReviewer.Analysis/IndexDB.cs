@@ -4,9 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using dnlib.DotNet;
-using DeReviewer.KnowledgeBase.Internals;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public class IndexDb
     {

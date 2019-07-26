@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DeReviewer.Analysis;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
 using NUnit.Framework;

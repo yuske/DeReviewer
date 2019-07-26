@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using CommandLine;
+using DeReviewer.Analysis;
 using DeReviewer.CommandLine;
 
 namespace DeReviewer

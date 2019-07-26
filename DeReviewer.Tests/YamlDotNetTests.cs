@@ -1,3 +1,4 @@
+using DeReviewer.Analysis;
 using dnlib.DotNet;
 using NUnit.Framework;
 

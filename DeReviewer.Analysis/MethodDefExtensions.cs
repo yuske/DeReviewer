@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using dnlib.DotNet;
 
 // ReSharper disable once CheckNamespace
-namespace dnlib.DotNet
+namespace DeReviewer.Analysis
 {
     internal static class MethodDefExtensions
     {

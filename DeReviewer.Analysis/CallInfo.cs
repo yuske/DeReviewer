@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using dnlib.DotNet.Emit;
 
-namespace DeReviewer
+namespace DeReviewer.Analysis
 {
     public class CallInfo
     {
