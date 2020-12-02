@@ -4,7 +4,7 @@ namespace DeReviewer.Analysis
 {
     public class CallGraphNode
     {
-        private readonly CallInfo info;
+        public readonly CallInfo info;
 
         public CallGraphNode(CallInfo info)
         {
