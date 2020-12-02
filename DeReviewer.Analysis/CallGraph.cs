@@ -251,26 +251,54 @@ namespace DeReviewer.Analysis
         public void Dump(string path)
         {
             Console.WriteLine($"{path}: EntryPoints ({EntryNodes.Count}), Nodes ({Nodes.Count})");
-            var entryPointsStatPath = Path.Combine(Path.GetDirectoryName(path) ?? String.Empty,
+            DumpGraph(path, Nodes.Values);
+            DumpStat(path, EntryNodes.Values, Nodes.Count);
+        }
+
+        public void DumpSeparateUsages(string directory)
+        {
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            var levelOneNodes = 0;
+            foreach (var root in Roots.Values)
+            {
+                foreach (var node in root.InNodes)
+                {
+                    var path = Path.Combine(directory, $"graph_{levelOneNodes++}.png"); 
+                    var nodeCount = DumpGraph(path, TraverseNodes(root, node));
+                    DumpStat(path, lastTraversalEntryPoints, nodeCount);
+                }
+            }
+        }
+
+        private static void DumpStat(string path, ICollection<CallGraphNode> entryNodes, int nodeCount)
+        {
+            var entryPointsStatPath = Path.Combine(
+                Path.GetDirectoryName(path) ?? String.Empty,
                 Path.GetFileNameWithoutExtension(path) + ".stat.txt");
-            var statByAssemblies = EntryNodes.Values.GroupBy(
+            var statByAssemblies = entryNodes.GroupBy(
                 node => node.AssemblyName, 
                 (key, nodes) => $"{key}: {nodes.Count()}");
-                //(key, nodes) => new {Name = key, Count = nodes.Count()});
+            //(key, nodes) => new {Name = key, Count = nodes.Count()});
             File.WriteAllLines(entryPointsStatPath, statByAssemblies);
             File.AppendAllText(entryPointsStatPath, "\n");
-            File.AppendAllText(entryPointsStatPath, $"Total: {EntryNodes.Count} (all nodes {Nodes.Count})");
-            
+            File.AppendAllText(entryPointsStatPath, $"Total: {entryNodes.Count} (all nodes {nodeCount})");
+        }
+
+        private static int DumpGraph(string path, IEnumerable<CallGraphNode> nodes)
+        {
+            var count = 0;
             try
             {
                 // may try >sfdp -x -Goverlap=prism -Tpng magic.gv > data.png 
                 var pathGraphVizFile = Path.Combine(
                     Path.GetDirectoryName(path) ?? String.Empty, 
                     Path.GetFileNameWithoutExtension(path) + ".gv");
-                var graphViz = new GraphViz(this);
-                graphViz.Save(pathGraphVizFile);
-                if (Nodes.Count < 0 || Nodes.Count > 1000)
-                    return;
+                var graphViz = new GraphViz(nodes);
+                count = graphViz.Save(pathGraphVizFile);
+                if (count < 0 || count > 1000)
+                    return count;
                 
                 var process = Process.Start(new ProcessStartInfo
                 {
@@ -287,6 +315,40 @@ namespace DeReviewer.Analysis
             catch (Exception exception)
             {
                 Console.WriteLine("Error create a graph dump: {0}", exception);
+            }
+
+            return count;
+        }
+
+        private List<CallGraphNode> lastTraversalEntryPoints = new List<CallGraphNode>();
+        private IEnumerable<CallGraphNode> TraverseNodes(
+            CallGraphNode rootNode, CallGraphNode levelOneNode)
+        {
+            lastTraversalEntryPoints.Clear();
+            var nodes = new HashSet<CallGraphNode>(Nodes.Count);
+            nodes.Add(rootNode);
+            yield return rootNode;
+
+            var queue = new Queue<CallGraphNode>();
+            queue.Enqueue(levelOneNode);
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+                if (!nodes.Add(node))
+                    continue;
+                
+                yield return node;
+                if (node.InNodes.Count == 0)
+                {
+                    lastTraversalEntryPoints.Add(node);
+                }
+                else
+                {
+                    foreach (var inNode in node.InNodes)
+                    {
+                        queue.Enqueue(inNode);
+                    }
+                }
             }
         }
     }

@@ -8,29 +8,31 @@ namespace DeReviewer.Analysis
     internal class GraphViz
     {
         private readonly string[] subgraphColors = new[] { "blue", "darkslateblue", "orange3", "violetred4", "purple4", "orangered4" };
-        private readonly CallGraph data;
+        private readonly IEnumerable<CallGraphNode> nodes;
 
-        public GraphViz(CallGraph data)
+        public GraphViz(IEnumerable<CallGraphNode> nodes)
         {
-            this.data = data;
+            this.nodes = nodes;
         }
 
-        public void Save(string fileName)
+        public int Save(string fileName)
         {
             using (var writer = new StreamWriter(fileName))
             {
-                Save(writer);
+                return Save(writer);
             }
         }
 
-        private void Save(TextWriter writer)
+        private int Save(TextWriter writer)
         {
             writer.WriteLine("digraph G {");
             writer.WriteLine("node [fontsize = 16];");
 
             var assemblyMap = new Dictionary<string, List<CallGraphNode>>();
-            foreach (var node in data.Nodes.Values)
+            var nodeCount = 0;
+            foreach (var node in nodes)
             {
+                nodeCount++;
                 if (assemblyMap.TryGetValue(node.AssemblyName, out var list))
                 {
                     list.Add(node);
@@ -45,7 +47,7 @@ namespace DeReviewer.Analysis
             ulong nodeId = 0;
             ulong clusterId = 0;
             int subgraphColorId = 0;
-            var ids = new Dictionary<CallGraphNode, ulong>(data.Nodes.Values.Count);
+            var ids = new Dictionary<CallGraphNode, ulong>(nodeCount);
             foreach (var pair in assemblyMap)
             {
                 if (!String.IsNullOrWhiteSpace(pair.Key))
@@ -89,7 +91,7 @@ namespace DeReviewer.Analysis
                 }
             }
 
-            foreach (var node in data.Nodes.Values)
+            foreach (var node in nodes)
             {
                 foreach (var outNode in node.OutNodes)
                 {
@@ -98,6 +100,7 @@ namespace DeReviewer.Analysis
             }
 
             writer.WriteLine("}");
+            return nodeCount;
         }
 
         private void SaveVertex(ulong id, CallGraphNode node, TextWriter writer)

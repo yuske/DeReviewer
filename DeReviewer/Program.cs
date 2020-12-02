@@ -36,6 +36,7 @@ namespace DeReviewer
                 var groupDirectory = Path.Combine(options.Output, group.Name);
                 Directory.CreateDirectory(groupDirectory);
                 callGraph.Dump(Path.Combine(groupDirectory, "full.png"));
+                callGraph.DumpSeparateUsages(Path.Combine(groupDirectory, "usages"));
 
                 callGraph.RemoveSameClasses();
                 //callGraph.RemoveMiddleNodes();
