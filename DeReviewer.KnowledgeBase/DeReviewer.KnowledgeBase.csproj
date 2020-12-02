@@ -48,8 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cases\BinaryFormatterPatterns.cs" />
+    <Compile Include="Cases\FileWriterPatterns.cs" />
+    <Compile Include="Cases\SoapTemplates.cs" />
     <Compile Include="Cases\XamlMarkupPatterns.cs" />
     <Compile Include="Cases\XamlSystemPatterns.cs" />
+    <Compile Include="Cases\XmlSerializerPatterns.cs" />
     <Compile Include="Cases\XslCompiledTransformPatterns.cs" />
     <Compile Include="Cases\XslTransformPatterns.cs" />
     <Compile Include="Cases\YamlDotNetPatterns.cs" />
