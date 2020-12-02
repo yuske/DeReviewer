@@ -14,6 +14,8 @@ namespace DeReviewer.Analysis
             public long AssemblyCount;
             public long TypeCount;
             public long MethodCount;
+            public long InstructionCountLong;
+            public double InstructionCount;
 
             public TimeSpan AssemblyLoading;
             public TimeSpan IndexBuilding;
@@ -158,6 +160,7 @@ namespace DeReviewer.Analysis
             Console.WriteLine();
             Console.WriteLine($"Types: {stat.TypeCount}");
             Console.WriteLine($"Methods: {stat.MethodCount}");
+            Console.WriteLine($"Instructions: {stat.InstructionCount} ({stat.InstructionCountLong})");
             Console.WriteLine($"----------");
             Console.WriteLine($"indexing {stat.IndexBuilding}");
             Console.WriteLine();
@@ -177,6 +180,10 @@ namespace DeReviewer.Analysis
                         stat.MethodCount++;
                         if (!methodDef.HasBody) continue;
                         if (!methodDef.Body.HasInstructions) continue;
+                        
+                        var instructionCount = methodDef.Body.Instructions.Count;
+                        stat.InstructionCount += instructionCount;
+                        stat.InstructionCountLong += instructionCount;
                         
                         CallInfo cacheInfo = null;
                         foreach (var instruction in methodDef.Body.Instructions)
