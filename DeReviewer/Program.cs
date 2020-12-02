@@ -36,9 +36,13 @@ namespace DeReviewer
                 var groupDirectory = Path.Combine(options.Output, group.Name);
                 Directory.CreateDirectory(groupDirectory);
                 callGraph.Dump(Path.Combine(groupDirectory, "full.png"));
-                
-                callGraph.RemoveNonPublicEntryNodes();
-                callGraph.Dump(Path.Combine(groupDirectory, "public.png"));
+
+                callGraph.RemoveSameClasses();
+                //callGraph.RemoveMiddleNodes();
+                callGraph.Dump(Path.Combine(groupDirectory, "classes.png"));
+
+                //callGraph.RemoveNonPublicEntryNodes();
+                //callGraph.Dump(Path.Combine(groupDirectory, "public.png"));
             }
             
             return 0;

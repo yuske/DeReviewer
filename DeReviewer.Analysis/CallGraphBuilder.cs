@@ -79,6 +79,7 @@ namespace DeReviewer.Analysis
                         new List<MethodUniqueSignature>(0));
                     var node = new CallGraphNode(info);
                     graph.Nodes.Add(pattern.Method, node);
+                    graph.Roots.Add(pattern.Method, node);
                     processingEntities.Enqueue(new ProcessingEntity(node.MethodSignature, node));
                 }
             }

@@ -107,7 +107,7 @@ namespace DeReviewer.Analysis
             writer.Write(id);
             writer.Write(" [");
             var isFirst = true;
-            WriteAttribute(writer, "label", node.MethodSignature.ToString(), ref isFirst);
+            WriteAttribute(writer, "label", node.MethodSignature.ToShortString(), ref isFirst);
             WriteAttribute(writer, "shape", shape, ref isFirst);
             WriteAttribute(writer, "style", style, ref isFirst);
             WriteAttribute(writer, "fillcolor", color, ref isFirst);
