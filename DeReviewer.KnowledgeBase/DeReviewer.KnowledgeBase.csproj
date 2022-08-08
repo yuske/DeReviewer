@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.PowerShell.Editor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\Microsoft.PowerShell.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -71,6 +75,7 @@
     <Compile Include="Formatters\Binary.cs" />
     <Compile Include="Formatters\Xaml.cs" />
     <Compile Include="Gadgets\ObjectDataProvider.cs" />
+    <Compile Include="Gadgets\TextFormattingRunProperties.cs" />
     <Compile Include="Gadgets\TypeConfuseDelegate.cs" />
     <Compile Include="PayloadGenerationMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +92,12 @@
       <Project>{495f718a-d925-4639-b6b9-00d00a17b3f6}</Project>
       <Name>DeReviewer.Analysis</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Payloads\TextFormattingRunProperties.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
